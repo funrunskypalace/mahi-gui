@@ -1,0 +1,13 @@
+{
+  "strategy": {},
+  "transaction": {
+    "TimeoutMicroseconds": 200000,
+    "CancelOnTimeout": true,
+    "CloseOnTimeout": false,
+    "ExposureDeadlineMicroseconds": 13000000,
+    "MaxCancelTimes": 3,
+    "CancelIntervalMicro": 1000000,
+    "MaxSendTimes": 3,
+    "MaxAmountDiffPercent": 0.05
+  }
+}

@@ -1,0 +1,24 @@
+{
+    "stop_time": "22:40",
+    "strategy_sdk": {
+        "server_addr": "tcp://127.0.0.1:12306"
+    },
+    "oos_front": {
+        "unique_name": "OOS_FRONT_001",
+        "address": "tcp://127.0.0.1:10931",
+        "operator_accounts": [
+            {
+                "operator_id": 8001,
+                "password": "123456"
+            }, {
+                "operator_id": 8002,
+                "password": "123456"
+            }
+        ]
+    },
+    "data_path": "./../data/",
+    "log_path": "./../logs/",
+    "resource_path": "./../config/",
+    "auth_code": "openorder",
+    "license_path": "."
+}

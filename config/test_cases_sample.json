@@ -1,0 +1,110 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$comment": "test cases for IC-ETF strategy. test_cases can support concurrent = 1 with multiple transaction_ref_ids, then all transactions will be processed one-by-one.",
+    "$id": "sample-tc-001",
+    "first_trade_id": 370001,
+    "first_sysorderid": 1000001,
+    "transactions": [
+        {
+            "ref_id": "transaction_case_001",
+            "TimeoutMicroseconds": 3000000,
+            "CancelOnTimeout": true,
+            "CloseOnTimeout": false,
+            "ExposureDeadlineMicroseconds": 13000000,
+            "MaxCancelTimes": 3,
+            "CancelIntervalMicro": 1000000,
+            "MaxSendTimes": 3,
+            "Orders": [
+                {
+                    "MaxSendTimes": 3,
+                    "ChannelID": 10001,
+                    "InvestorID": 10010001,
+                    "ExID": "SHFE",
+                    "InsID": "rb2001",
+                    "Direction": "0",
+                    "OffsetFlag": "0",
+                    "HedgeFlag": "1",
+                    "ProductClass": "1",
+                    "LimitPrice": 9001200,
+                    "VolumeTotalOriginal": 1,
+                    "Suppressing": true,
+                    "NeedReSend": false
+                },
+                {
+                    "ChannelID": 10001,
+                    "InvestorID": 10010001,
+                    "ExID": "SHFE",
+                    "InsID": "rb2001",
+                    "Direction": "1",
+                    "OffsetFlag": "3",
+                    "HedgeFlag": "1",
+                    "ProductClass": "1",
+                    "LimitPrice": 9001200,
+                    "VolumeTotalOriginal": 1,
+                    "Suppressing": true,
+                    "NeedReSend": true
+                }
+            ]
+        }
+    ],
+    "test_cases": [
+        {
+            "case_no": "tc-01005",
+            "concurrent": 1,
+            "transaction_ref_ids": [
+                "transaction_case_001",
+                "transaction_case_001"
+            ],
+            "match_ref_id": "M_50005"
+        }
+    ],
+    "matcher": {
+        "name": "icetf_uat_matcher_001",
+        "hit_percent": 0.5,
+        "hit_percent_step": 0.1,
+        "slip_page": 0
+    },
+    "special_matches": [
+        {
+            "ref_id": "M_50005",
+            "match_category": 2007,
+            "exchange_id": "SH",
+            "instrument_id": "600000",
+            "rsp_seq": [
+                {
+                    "type": "RtnOrder",
+                    "volume_traded": 200,
+                    "order_status": "3"
+                },
+                {
+                    "type": "RtnTrade",
+                    "trade_id": 1,
+                    "traded_vol": 200,
+                    "traded_price": 6.23
+                },
+                {
+                    "type": "RtnOrder",
+                    "volume_traded": 9001200,
+                    "order_status": "4"
+                }
+            ]
+        },
+        {
+            "match_category": 2006,
+            "exchange_id": "SZ",
+            "instrument_id": "131801",
+            "rsp_seq": [
+                {
+                    "type": "RtnOrder",
+                    "volume_traded": 0,
+                    "order_status": "2"
+                },
+                {
+                    "type": "RtnOrder",
+                    "volume_traded": 0,
+                    "order_status": "6"
+                }
+            ]
+        }
+    ]
+}

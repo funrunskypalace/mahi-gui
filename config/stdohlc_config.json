@@ -1,0 +1,19 @@
+{
+    "strategy": {
+        "ohlcoutput_dir": "d:/stockdata/output-barsize1-ohlc-nextday/",
+        "days_offset": 1,
+        "trading_calendar": "./../trading_calendar.csv",
+        "ohlcmatrix_cache": "./../data/ohlc_matrix_cache.txt"
+    },
+
+    "transaction": {
+        "TimeoutMicroseconds": 60000000,
+        "CancelOnTimeout": true,
+        "CloseOnTimeout": false,
+        "ExposureDeadlineMicroseconds": 5000000,
+        "MaxCancelTimes": 3,
+        "CancelIntervalMicro": 500000,
+        "MaxSendTimes": 2,
+        "MaxAmountDiffPercent": 0.05
+    }
+}

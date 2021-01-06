@@ -1,0 +1,23 @@
+{
+    "strategy": {
+      "export_wind": true,
+      "start_date": "2013-01-01",
+      "end_date": "2017-07-30",
+      "barsize": 1,
+      "barnumber_lowerbound": 1000,
+      "baroutput_dir": "d:/stockdata/output-barsize1-20170730/",
+      "calc_ohlc": false,
+      "ohlcoutput_dir": "d:/stockdata/output-barsize1-ohlc-20170730/"
+    },
+
+    "transaction": {
+      "TimeoutMicroseconds": 60000000,
+      "CancelOnTimeout": true,
+      "CloseOnTimeout": false,
+      "ExposureDeadlineMicroseconds": 5000000,
+      "MaxCancelTimes": 3,
+      "CancelIntervalMicro": 500000,
+      "MaxSendTimes": 2,
+      "MaxAmountDiffPercent": 0.05
+    }
+}

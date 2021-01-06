@@ -1,0 +1,81 @@
+{
+    "stop_time": "22:40",
+    "market_handlers": [],
+    "market_filters": [],
+    "strategy_instances": [],
+    "trade_interfaces": [
+        {
+            "channel_id": 10002,
+            "channel_type": "X",
+            "type_info": "TradeX_ZXJT_7.43",
+            "type_name": "TradeX",
+            "unique_name": "kc_tradex_99168545.C",
+            "ipv4_address": "202.130.235.187",
+            "ipv4_port": 7718,
+            "custom_config": {
+                "TdxCompanyID": 18,
+                "TdxClientVersion": "7.43",
+                "TdxSleepMsTrd": 100,
+                "TdxSleepMsQry": 100,
+                "BuySellCollateral": 1,
+                "TdxPagedQuery": 0
+            },
+            "investors": [
+                {
+                    "investor_id": 10010002,
+                    "user_id": "99168545",
+                    "account_code": "99168545.C",
+                    "password": "360615",
+                    "broker_id": "9999",
+                    "investor_type": "8",
+                    "trading_codes": [
+                        {
+                            "exchange_id": "SH",
+                            "trading_code": "E054414308"
+                        },
+                        {
+                            "exchange_id": "SZ",
+                            "trading_code": "0680035776"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "channel_id": 10001,
+            "channel_type": "2",
+            "type_info": "CTP",
+            "type_name": "CTPSE",
+            "unique_name": "kc_ctprealtime_dh_001",
+            "ipv4_address": "",
+            "ipv4_port": 0,
+            "custom_config": {
+                "StartupQryPosOrderTrade": true,
+                "CtpRunningMode": "realtime_dh_dx",
+                "CtpTradeAddr": "ssl://ctpdx1.dh168.com.cn:41206",
+                "CtpMdAddr": "tcp://ctpdx1.dh168.com.cn:41216",
+                "BrokerID": "4700",
+                "CtpAuthCode": "XH36XC8WXTEZPHC7",
+                "CtpProductInfo": "client_fhsoft",
+                "CtpAppId": "TZ_STrader_1.0",
+                "CloseHistoryType": "0"
+            },
+            "investors": [
+                {
+                    "investor_id": 10010001,
+                    "user_id": "3106352",
+                    "account_code": "3106352",
+                    "password": "360615tz",
+                    "broker_id": "4700",
+                    "investor_type": "9",
+                    "trading_codes": []
+                }
+            ]
+        }
+    ],
+    "data_path": "./../data/",
+    "log_path": "./../logs/",
+    "resource_path": "./../config/",
+    "auth_code": "openorder",
+    "license_path": "."
+}

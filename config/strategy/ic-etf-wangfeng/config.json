@@ -1,0 +1,12 @@
+{
+    "px_etf_yesterday_close": 5.582,
+    "px_ic_yesterday_close": 5162.07,
+
+    "exchange_id_etf": "SH",
+    "instrument_id_etf": "510500",
+    "exchange_id_ic": "CFFEX",
+    "instrument_id_ic": "IC2001",
+
+    "ic_pts_upper_edge": 10.0,
+    "ic_pts_lower_edge": -10.0
+}

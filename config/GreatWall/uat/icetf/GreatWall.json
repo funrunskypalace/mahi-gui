@@ -1,0 +1,91 @@
+{
+    "stop_time": "22:40",
+    "market_handlers": [],
+    "market_filters": [],
+    "strategy_instances": [],
+    "trade_interfaces": [
+        {
+            "channel_id": 10002,
+            "channel_type": "F",
+            "type_info": "QmtFile_ZXJT_2020",
+            "type_name": "QmtFile",
+            "unique_name": "kc_qmtfile_99168545.C",
+            "channel_loadtype": "D",
+            "channel_loadid": "qmtfile",
+            "resume_type": 2,
+            "ipv4_address": "127.0.0.1",
+            "ipv4_port": 0,
+            "custom_config": {
+                "QmtInsertFilePath": "../../runtime/run_qmtfile/QmtInsertFilePath.txt",
+                "QmtResultAccountInfoFilePath": "../../runtime/run_qmtfile/QmtResultAccountInfoFilePath.csv",
+                "QmtResultPositionFilePath": "../../runtime/run_qmtfile/QmtResultPositionFilePath.csv",
+                "QmtResultOrderFilePath": "../../runtime/run_qmtfile/QmtResultOrderFilePath.csv",
+                "QmtResultTradeFilePath": "../../runtime/run_qmtfile/QmtResultTradeFilePath.csv",
+                "QmtChannelID": 0,
+                "QmtStrategyName": "runtime/run_qmtfile_strategy",
+                "QmtTradingType": 0,
+                "QmtAccountGroup": "runtime/run_qmtfile_group",
+                "QmtSliceType": 0,
+                "QmtFetchResultIntervalMs": 500
+            },
+            "investors": [
+                {
+                    "investor_id": 10010002,
+                    "user_id": "99168545.C",
+                    "account_code": "99168545",
+                    "password": "0",
+                    "broker_id": "0",
+                    "investor_type": "0",
+                    "trading_codes": [
+                        {
+                            "exchange_id": "SH",
+                            "trading_code": "E054414308"
+                        },
+                        {
+                            "exchange_id": "SZ",
+                            "trading_code": "0680035776"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "channel_id": 10001,
+            "channel_type": "2",
+            "type_info": "CTP",
+            "type_name": "CTPSE",
+            "unique_name": "kc_ctp_001",
+            "channel_loadtype": "D",
+            "channel_loadid": "ctpse",
+            "resume_type": 2,
+            "ipv4_address": "",
+            "ipv4_port": 0,
+            "custom_config": {
+                "StartupQryPosOrderTrade": true,
+                "CtpRunningMode": "debug_tr_simnow",
+                "CtpTradeAddr": "tcp://180.168.146.187:10100",
+                "CtpMdAddr": "tcp://180.169.227.244:43213",
+                "BrokerID": "9999",
+                "CtpAuthCode": "0000000000000000",
+                "CtpProductInfo": "client_fhsoft",
+                "CtpAppId": "client_fhsoft_1.0.0"
+            },
+            "investors": [
+                {
+                    "investor_id": 10010001,
+                    "user_id": "126399",
+                    "account_code": "126399",
+                    "password": "vpn17560149",
+                    "broker_id": "9999",
+                    "investor_type": "9",
+                    "trading_codes": []
+                }
+            ]
+        }
+    ],
+    "data_path": "./../data/",
+    "log_path": "./../logs/",
+    "resource_path": "./../config/",
+    "auth_code": "openorder",
+    "license_path": "."
+}

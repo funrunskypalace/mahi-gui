@@ -153,6 +153,7 @@ endif()
 
 # add source files
 add_subdirectory(src/Mahi/Gui)
+add_subdirectory(application)
 
 target_sources(gui PRIVATE ${IMGUI_SRC} ${IMGUI_HEADERS})
 target_sources(gui PRIVATE ${IMPLOT_SRC} ${IMPLOT_HEADERS})

@@ -1,0 +1,6 @@
+REPLACE INTO `tradechannel` (`ChannelID`, `ChannelName`, `ChannelType`, `SysIP`, `SysPort`, `ChannelConfig`, `TradingDay`) VALUES (1, 'JinZ_Credit', 'J', '180.168.125.215', '42000', '{"Basic": "180.168.125.215&42000&K&110455925383&ZnprakAxMjM=&12345&1:172.200.15.186","Extend":{"HeartBeat":true,"SyncAccountAsset":false,"SyncCounter":true},"FilterStkBiz4SyncAsset":"##702##703##704##705##706##707##710##"}', 20200413);
+REPLACE INTO `tradechannel` (`ChannelID`, `ChannelName`, `ChannelType`, `SysIP`, `SysPort`, `ChannelConfig`, `TradingDay`) VALUES (2, 'JinZ_Normal', 'J', '180.168.125.215', '42000', '{"Basic": "180.168.125.215&42000&K&110455925383&ZnprakAxMjM=&12345&1:172.200.15.186","Extend":{"HeartBeat":true,"SyncAccountAsset":false,"SyncCounter":true},"FilterStkBiz4SyncAsset":"##702##703##704##705##706##707##710##"}', 20200413);
+UPDATE `rx_trade`.`account` SET `EnbFlag`='N' WHERE  `AccountID`=1002 AND `TradingDay`=20200923;
+
+REPLACE INTO `tradechannel` (`ChannelID`, `ChannelName`, `ChannelType`, `SysIP`, `SysPort`, `ChannelConfig`, `TradingDay`) VALUES (1, 'JinZ_Credit', 'J', '127.0.0.1', '10900', '{"MockCounterServerAddress":"127.0.0.1", "MockCounterServerPort": 10900}', 20200413);
+UPDATE `rx_trade`.`account` SET `EnbFlag`='L' WHERE  `AccountID`=1002 AND `TradingDay`=20200923;

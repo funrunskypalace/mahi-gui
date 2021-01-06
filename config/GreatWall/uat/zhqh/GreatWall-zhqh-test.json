@@ -1,0 +1,92 @@
+{
+  "stop_time": "22:40",
+  "market_handlers": [
+    {
+      "type": 1320,
+      "type_name": "MHT_CTPMDAPI",
+      "unique_name": "mht_ctpmdapi_test",
+      "config_path": "./../",
+      "channel_id": 10001,
+      "custom_config": {
+        "currency_id": "CNY"
+      }
+    }
+  ],
+  "trade_interfaces": [
+    {
+      "is_active": 1,
+      "channel_id": 10001,
+      "channel_type": "2",
+      "type_info": "CTP",
+      "type_name": "CTPSE",
+      "unique_name": "debug_zhqh_sim",
+      "channel_loadtype": "D",
+      "channel_loadid": "ctpse",
+      "resume_type": 2,
+      "ipv4_address": "",
+      "ipv4_port": 0,
+      "custom_config": {
+        "StartupQryPosOrderTrade": true,
+        "CtpRunningMode": "debug_zhqh_sim",
+        "CtpTradeAddr": "tcp://114.80.104.163:33437",
+        "CtpMdAddr": "tcp://114.80.104.163:33443",
+        "BrokerID": "0274",
+        "CtpAuthCode": "XP3E7BLDL8NRT1WX",
+        "CtpProductInfo": "client_TwinOrder",
+        "CtpAppId": "client_TwinOrder_1.1",
+        "CloseHistoryType": "0"
+      },
+      "investors": [
+        {
+          "investor_id": 10010001,
+          "broker_id": "0274",
+          "user_id": "1000001",
+          "account_code": "1000001",
+          "password": "zhqh123456",
+          "investor_type": "9",
+          "trading_codes": []
+        }
+    ],
+    "trade_interfaces": [
+        {
+            "is_active": true,
+            "channel_id": 10001,
+            "channel_type": "2",
+            "type_info": "CTP",
+            "type_name": "CTPSE",
+            "unique_name": "debug_zhqh_sim",
+            "channel_loadtype": "D",
+            "channel_loadid": "ctpse",
+            "resume_type": 2,
+            "ipv4_address": "",
+            "ipv4_port": 0,
+            "custom_config": {
+                "StartupQryPosOrderTrade": true,
+                "CtpRunningMode": "debug_zhqh_sim",
+                "CtpTradeAddr": "tcp://114.80.104.163:33437",
+                "CtpMdAddr": "tcp://114.80.104.163:33443",
+                "BrokerID": "0274",
+                "CtpAuthCode": "XP3E7BLDL8NRT1WX",
+                "CtpProductInfo": "client_TwinOrder",
+                "CtpAppId": "client_TwinOrder_1.1",
+                "CloseHistoryType": "0"
+            },
+            "investors": [
+                {
+                    "investor_id": 10010001,
+                    "broker_id": "0274",
+                    "user_id": "1000001",
+                    "account_code": "1000001",
+                    "password": "zhqh123456",
+                    "investor_type": "9",
+                    "trading_codes": []
+                }
+            ]
+        }
+    ],
+    "data_path": "./../data/",
+    "log_path": "./../logs/",
+    "resource_path": "./../config/",
+    "auth_code": "openorder",
+    "license_path": "."
+}

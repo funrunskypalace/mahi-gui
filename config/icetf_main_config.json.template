@@ -1,0 +1,65 @@
+{
+  "strategy": {
+    "exchange_id_index": "SH",
+    "instrument_id_index": "000905",
+    "exchange_id_etf": "SH",
+    "instrument_id_etf": "510500",
+    "exchange_id_ic": "CFFEX",
+    "instrument_id_ic": "IC2002",
+    "ic_pts_upper_edge": 20.0,
+    "ic_pts_lower_edge": -20.0,
+    "close_edge": 10.0,
+    "close_dir": "LT",
+    "cc_ic_dir": "1",
+    "cc_ic_offset": "1",
+    "cc_etf_dir": "0",
+    "pair_number": 1,
+    "etf_insert_volume_per_ic_hand": 184600,
+    "steady_price_diff_count": 10,
+    "etf_price_shift": 0.001,
+    "noon_stop_hour": 11,
+    "noon_stop_minute": 27,
+    "afternoon_stop_hour": 14,
+    "afternoon_stop_minute": 57,
+    "up_down_px_limit_protect_coe": 0.005
+  },
+  "transaction": {
+    "TimeoutMicroseconds": 500000,
+    "CancelOnTimeout": true,
+    "CloseOnTimeout": false,
+    "ExposureDeadlineMicroseconds": 13000000,
+    "MaxCancelTimes": 3,
+    "CancelIntervalMicro": 1000000,
+    "MaxSendTimes": 20
+  },
+  "risk_control": {
+    "MaxAmountDiffPercent": 0.05
+  },
+  "log": {
+    "refresh_display_tick_count": 5
+  },
+  "market_interfaces": {
+    "time_threshold_nano": 10000000000,
+    "tfmd_market": {
+      "mdp_type": "a",
+      "market_user": "tfmdRD",
+      "market_password": "dGZtZFJE"
+    },
+    "market_bk_simaliyun": {
+      "mdp_type": "a",
+      "market_user": "tfmdRD",
+      "market_password": "dGZtZFJE"
+    },
+    "market_bk_prod": {
+      "mdp_type": "1",
+      "market_user": "10200001",
+      "market_password": "ODgyMDE5"
+    },
+    "ctp": {
+      "md_addr": "tcp://180.169.227.244:43213",
+      "user_id": "143292",
+      "password": "wangfeng123",
+      "broker_id": "9999"
+    }
+  }
+}

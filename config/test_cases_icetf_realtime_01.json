@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$comment": "test cases for IC-ETF strategy. 仅测试1手IC委托。 test_cases can support concurrent = 1 with multiple transaction_ref_ids, then all transactions will be processed one-by-one.",
+  "$id": "icetf-all-001",
+  "first_trade_id": 370001,
+  "first_sysorderid": 1000001,
+  "at_mode": "realtime",
+  "at_mode_description": "'realtime' - insert orders on realtime. 'manual' - using pre-defined transaction.",
+  "realtime_matches": [
+    "M_50605",
+    "M_60805"
+  ],
+  "transactions": [
+  ],
+  "test_cases": [
+  ],
+  "special_matches": [
+    {
+      "ref_id": "M_50605",
+      "match_category": 2006,
+      "exchange_id": "CFFEX",
+      "instrument_id": "IC2001",
+      "description": "IC一手已报后先成交后委托更新",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "1",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        },
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "     8386425",
+          "traded_volume": 1,
+          "traded_price": 5230.0,
+          "cancel_flag": "1"
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 1,
+          "order_status": "2",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 1,
+          "order_status": "4",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        }
+      ]
+    },
+    {
+      "ref_id": "M_60805",
+      "match_category": 2006,
+      "exchange_id": "SH",
+      "instrument_id": "510500",
+      "description": "ETF直接部分成交（先成交再状态变化）",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "1",
+          "order_sys_id": "",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "2",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "6425",
+          "traded_volume": 84600,
+          "traded_price": 5.628,
+          "cancel_flag": "1"
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 84600,
+          "order_status": "3",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "6425",
+          "traded_volume": 100000,
+          "traded_price": 5.628,
+          "cancel_flag": "1"
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 184600,
+          "order_status": "4",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "strategy": {
+    "exchange": "CFFEX",
+    "first_leg_instrument": "IC2002",
+    "first_leg_comb_offset": "LO",
+    "second_leg_instrument": "IC2003",
+    "second_leg_comb_offset": "SO",
+    "trigger_mode": "LE",
+    "trigger_index": 100.0,
+    "stop_loss_ratio": 0.01,
+    "stop_profit_loss" : 0.03,
+    "volume": 1,
+    "trading_times": 10
+  },
+  "transaction": {
+    "TimeoutMicroseconds": 200000,
+    "CancelOnTimeout": true,
+    "CloseOnTimeout": false,
+    "ExposureDeadlineMicroseconds": 13000000,
+    "MaxCancelTimes": 3,
+    "CancelIntervalMicro": 1000000,
+    "MaxSendTimes": 3,
+    "MaxAmountDiffPercent": 0.05
+  }
+}

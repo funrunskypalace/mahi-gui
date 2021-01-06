@@ -1,0 +1,56 @@
+{
+    "stop_time": "22:40",
+    "market_handlers": [
+        {
+            "type": 1320,
+            "type_name": "MHT_CTPMDAPI",
+            "unique_name": "mht_ctpmdapi_prod",
+            "config_path": "./../",
+            "channel_id": 10001,
+            "custom_config": {
+                "currency_id": "CNY"
+            }
+        }
+    ],
+    "trade_interfaces": [
+        {
+            "is_active": 1,
+            "channel_id": 10001,
+            "channel_type": "2",
+            "type_info": "CTP",
+            "type_name": "CTPSE",
+            "unique_name": "prod_zhqh_5702035",
+            "channel_loadtype": "D",
+            "channel_loadid": "ctpse",
+            "ipv4_address": "",
+            "ipv4_port": 0,
+            "custom_config": {
+                "StartupQryPosOrderTrade": true,
+                "CtpRunningMode": "prod_zhqh_5702035",
+                "CtpTradeAddr": "tcp://101.226.253.32:42205",
+                "CtpMdAddr": "tcp://101.226.253.35:42213",
+                "BrokerID": "0274",
+                "CtpAuthCode": "XP3E7BLDL8NRT1WX",
+                "CtpProductInfo": "client_TwinOrder",
+                "CtpAppId": "client_TwinOrder_1.1",
+                "CloseHistoryType": "0"
+            },
+            "investors": [
+                {
+                    "investor_id": 10010001,
+                    "broker_id": "0274",
+                    "user_id": "5702035",
+                    "account_code": "5702035",
+                    "password": "love2006",
+                    "investor_type": "9",
+                    "trading_codes": []
+                }
+            ]
+        }
+    ],
+    "data_path": "./../data/",
+    "log_path": "./../logs/",
+    "resource_path": "./../config/",
+    "auth_code": "openorder",
+    "license_path": "."
+}

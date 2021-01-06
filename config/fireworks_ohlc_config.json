@@ -1,0 +1,20 @@
+{
+    "strategy": {
+        "top_number": 10,
+        "output_path": "d:/stockdata/output-barsize1-ohlc-nextday-similarity/",
+        "similarity_threshold": 30,
+        "running_test": false,
+        "ohlcmatrix_cache": "./../data/ohlc_matrix_nextday_cache.txt"
+    },
+
+    "transaction": {
+        "TimeoutMicroseconds": 60000000,
+        "CancelOnTimeout": true,
+        "CloseOnTimeout": false,
+        "ExposureDeadlineMicroseconds": 5000000,
+        "MaxCancelTimes": 3,
+        "CancelIntervalMicro": 500000,
+        "MaxSendTimes": 2,
+        "MaxAmountDiffPercent": 0.05
+    }
+}

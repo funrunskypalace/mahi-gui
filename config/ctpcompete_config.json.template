@@ -1,0 +1,31 @@
+{
+  "strategy": {
+    "exchange_id": "SHFE",
+    "instrument_id": "zn2005",
+    "first_price": 15600,
+    "second_price": 15630,
+    "volume": 8,
+    "first_direction": "0",
+    "first_offset": "0",
+    "first_resend": false,
+    "first_suppressing": true,
+    "second_direction": "1",
+    "second_offset": "3",
+    "second_resend": true,
+    "second_suppressing": false,
+    "transaction_times": 5,
+    "transaction_interval_ms": 100,
+    "trigger_time": "13:30:00",
+    "trigger_shift_ms": 100
+  },
+  "transaction": {
+    "TimeoutMicroseconds": 3000000,
+    "CancelOnTimeout": true,
+    "CloseOnTimeout": false,
+    "ExposureDeadlineMicroseconds": 13000000,
+    "MaxCancelTimes": 3,
+    "CancelIntervalMicro": 1000000,
+    "MaxSendTimes": 30,
+    "MaxAmountDiffPercent": 0.05
+  }
+}

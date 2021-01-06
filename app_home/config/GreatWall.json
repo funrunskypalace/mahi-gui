@@ -1,0 +1,255 @@
+{
+    "stop_time": "22:40",
+    "strategy_sdk": {
+        "server_addr": "tcp://127.0.0.1:12506"
+    },
+    "market_handlers": [
+        {
+            "is_active": 1,
+            "type": 1320,
+            "type_name": "OR-MarketHandler",
+            "unique_name": "or-mkt-handler-001",
+            "config_path": "./../",
+            "custom_config": {
+                "channel_id": 11001,
+                "currency_id": "CNY"
+            }
+        },
+        {
+            "is_active": 0,
+            "type": 1010,
+            "type_name": "MktPlugin-MarketHandler",
+            "unique_name": "mktplugin-mkt-handler-001",
+            "config_path": "./../",
+            "custom_config": {
+                "plugin_inst_id": "tfmdapi-mktplugin-001"
+            }
+        }
+    ],
+    "trade_interfaces": [
+		{
+            "is_active": 1,
+            "channel_id": 11001,
+            "channel_type": "D",
+            "channel_loadtype": "D",
+            "channel_loadid": "mockcounter",
+            "type_info": "mockcounter_adapter",
+            "type_name": "mockcounter",
+            "unique_name": "mockcounter_47.103.194.123_10900",
+            "ipv4_address": "47.103.194.123",
+            "ipv4_port": 10900,
+            "custom_config": {
+                "MockCounterServerAddress":"47.103.194.123", 
+                "MockCounterServerPort":10900
+            },
+            "investors": [
+                {
+                    "investor_id": 10010001,
+                    "user_id": "10010001",
+                    "account_code": "10010001",
+                    "password": "123456",
+                    "broker_id": "1",
+                    "investor_type": "8",
+                    "trading_codes": [
+                        {
+                            "exchange_id": "SH",
+                            "trading_code": "A593957683"
+                        },
+                        {
+                            "exchange_id": "SZ",
+                            "trading_code": "0274098665"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "is_active": 0,
+            "channel_id": 11001,
+            "channel_type": "5",
+            "channel_loadtype": "S",
+            "channel_loadid": "simulate",
+            "type_info": "OR_CHT_SIMULATE",
+            "type_name": "OR_CHT_SIMULATE",
+            "unique_name": "OR_CHT_SIMULATE.192.168.41.62",
+            "ipv4_address": "192.168.41.62",
+            "ipv4_port": 10900,
+            "custom_config": {},
+            "investors": [
+                {
+                    "investor_id": 10010002,
+                    "user_id": "456789",
+                    "account_code": "456789",
+                    "password": "******",
+                    "broker_id": "9999",
+                    "investor_type": "8",
+                    "trading_codes": []
+                }
+            ]
+        },
+        {
+            "is_active": 0,
+            "channel_id": 11001,
+            "channel_type": "2",
+            "channel_loadtype": "D",
+            "channel_loadid": "ctpse",
+            "type_info": "CTP",
+            "type_name": "CTP_SE",
+            "unique_name": "ctpse_tr_simnow_126399_a01",
+            "ipv4_address": "",
+            "ipv4_port": 0,
+            "custom_config": {
+                "StartupQryPosOrderTrade": true,
+                "ChannelThirdReff1": "ctpse_tr_simnow_126399_a01",
+                "CtpRunningMode": "debug_tr_simnow",
+                "CtpTradeAddr": "tcp://180.168.146.187:10100",
+                "CtpMdAddr": "tcp://180.169.227.244:43213",
+                "BrokerID": "9999",
+                "CtpAuthCode": "0000000000000000",
+                "CtpProductInfo": "client_fhsoft",
+                "CtpAppId": "client_fhsoft_1.0.0",
+                "CloseHistoryType": "0"
+            },
+            "investors": [
+                {
+                    "investor_id": 10010001,
+                    "user_id": "126399",
+                    "account_code": "126399",
+                    "password": "vpn17560149",
+                    "broker_id": "9999",
+                    "investor_type": "9",
+                    "trading_codes": []
+                }
+            ]
+        },
+        {
+            "is_active": 0,
+            "channel_id": 11001,
+            "channel_type": "2",
+            "channel_loadtype": "D",
+            "channel_loadid": "ctpse",
+            "type_info": "CTP",
+            "type_name": "CTP_SE",
+            "unique_name": "ctp_ntr_simnow_001",
+            "ipv4_address": "",
+            "ipv4_port": 0,
+            "custom_config": {
+                "StartupQryPosOrderTrade": true,
+                "CtpRunningMode": "debug_ntr_simnow",
+                "CtpTradeAddr": "tcp://180.168.146.187:10130",
+                "CtpMdAddr": "tcp://180.168.146.187:10131",
+                "BrokerID": "9999",
+                "CtpAuthCode": "0000000000000000",
+                "CtpProductInfo": "client_fhsoft",
+                "CtpAppId": "client_fhsoft_1.0.0",
+                "CloseHistoryType": "0"
+            },
+            "investors": [
+                {
+                    "investor_id": 10010001,
+                    "user_id": "126399",
+                    "account_code": "126399",
+                    "password": "vpn17560149",
+                    "broker_id": "9999",
+                    "investor_type": "9",
+                    "trading_codes": []
+                }
+            ]
+        },
+        {
+            "is_active": 0,
+            "channel_id": 11001,
+            "channel_type": "2",
+            "channel_loadtype": "D",
+            "channel_loadid": "tfmd",
+            "type_info": "TF Market Data API",
+            "type_name": "TFMD",
+            "unique_name": "tfmd_tfmdrd_001",
+            "ipv4_address": "",
+            "ipv4_port": 0,
+            "custom_config": {
+                "MdpType": "a",
+                "MarketUser": "tfmdRD",
+                "MarketPassword": "dGZtZFJE"
+            },
+            "investors": [
+                {
+                    "investor_id": 10010001,
+                    "user_id": "11001",
+                    "account_code": "456789",
+                    "password": "123456",
+                    "broker_id": "0",
+                    "investor_type": "0",
+                    "trading_codes": [],
+                    "is_active": 1
+                }
+            ]
+        },
+        {
+            "is_active": 0,
+            "channel_id": 11001,
+            "channel_type": "2",
+            "channel_loadtype": "D",
+            "channel_loadid": "eqapi",
+            "type_info": "EQAPI Market Data API",
+            "type_name": "EQAPI",
+            "unique_name": "eqapi_mh_001",
+            "ipv4_address": "125.208.12.93",
+            "ipv4_port": 12010,
+            "custom_config": {
+                "UserID": "probing_sm_cs",
+                "Password": "probing_sm_cs"
+            },
+            "investors": [
+                {
+                    "investor_id": 11002,
+                    "user_id": "11002",
+                    "account_code": "456789",
+                    "password": "123456",
+                    "broker_id": "0",
+                    "investor_type": "0",
+                    "trading_codes": []
+                }
+            ]
+        },
+        {
+            "is_active": 0,
+            "channel_id": 11001,
+            "channel_type": "T",
+            "channel_loadtype": "D",
+            "channel_loadid": "rxtrade",
+            "type_info": "Kecheng RxTradeApi adapter",
+            "type_name": "OR_RXTRADE",
+            "unique_name": "OR_RXTRADE_001_aliyun_222",
+            "ipv4_address": "",
+            "ipv4_port": 0,
+            "custom_config": {
+                "ChannelID": 10001,
+                "OperatorID": 10010001,
+                "AccountID": 1001,
+                "ComboID": 1,
+                "Password": "123456",
+                "TFTradeAddr": "tcp://127.0.0.1:7011",
+                "TFQueryAddr": "tcp://127.0.0.1:7012",
+                "TradeFlowPath": "./../data/"
+            },
+            "investors": [
+                {
+                    "investor_id": 10010001,
+                    "user_id": "10010001",
+                    "account_code": "10010001",
+                    "password": "123456",
+                    "broker_id": "0",
+                    "investor_type": "0",
+                    "trading_codes": []
+                }
+            ]
+        }
+    ],
+    "data_path": "./../data/",
+    "log_path": "./../logs/",
+    "resource_path": "./../config/",
+    "auth_code": "openorder",
+    "license_path": ".",
+    "instance_config_path": "./../instance_config/"
+}
