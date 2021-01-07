@@ -14,8 +14,6 @@ const char* DEFAULT_LOG_FORMAT = "[%Y-%m-%d %T.%e][%t][%l][%n] %v";
 //
 // =====================================================
 
-bool GwTraderEngine::curdateInitialized(int date) const { return current_date_ == date; }
-
 void GwTraderEngine::notifyTradeEngineStatus(const std::string& statusCode,
                                              const std::string& statusMsg) {
     LOGGER->info(">>> Got trading engine notify >>>  {} {}", statusCode, statusMsg);
@@ -23,9 +21,6 @@ void GwTraderEngine::notifyTradeEngineStatus(const std::string& statusCode,
 
 void GwTraderEngine::onLogin(or_channelid_i channelId, or_investorid_i investorId, bool hasLogin) {
     LOGGER->info("onLogin {}, {}, {}", channelId, investorId, hasLogin);
-
-    OrderCachePtr                               oc = orderCache();
-    std::shared_ptr<std::list<OROrderFieldPtr>> os = oc->getAllOrders();
 }
 
 void GwTraderEngine::onInitialized(or_channelid_i channelId, or_investorid_i investorId,
@@ -99,10 +94,10 @@ void GwTraderEngine::subscribe(const std::string& exId, const std::string& insId
     // callback_(&field);
     // return;
 
-    auto field       = std::make_shared<ORReqSubscribeMarketDataField>();
-    field->ChannelID = 11001;
+    auto field = std::make_shared<ORReqSubscribeMarketDataField>();
     assign(field->ExchangeID, exId.c_str(), OR_EXCHANGEID_LEN);
     assign(field->InstrumentID, insId.c_str(), OR_INSTRUMENTID_LEN);
+    field->ChannelID       = 11001;
     field->ProductClass    = product_class;
     field->MarketDataType  = product_class_to_market_data(product_class);
     field->SubscribeSwitch = OR_RS_ON;
@@ -117,23 +112,24 @@ void GwTraderEngine::unsubscribe(const std::string& exId, const std::string& ins
         return;
     }
 
-    auto field       = std::make_shared<ORReqSubscribeMarketDataField>();
-    field->ChannelID = 11001;
+    auto field = std::make_shared<ORReqSubscribeMarketDataField>();
     assign(field->ExchangeID, exId.c_str(), OR_EXCHANGEID_LEN);
     assign(field->InstrumentID, insId.c_str(), OR_INSTRUMENTID_LEN);
+    field->ChannelID       = 11001;
     field->ProductClass    = product_class;
     field->MarketDataType  = product_class_to_market_data(product_class);
     field->SubscribeSwitch = OR_RS_OFF;
     channel->subscribeMarket(field.get());
 }
 
-or_md_data_list_ptr GwTraderEngine::fetch() { 
+or_md_data_list_ptr GwTraderEngine::fetch() {
     std::lock_guard<std::mutex> lock(mux_md_data_);
-    auto trans = new_md_data_;
+
+    auto trans   = new_md_data_;
     new_md_data_ = std::make_shared<std::list<ORDepthMarketDataFieldPtr>>();
-    return trans; 
+    return trans;
 }
-    // =====================================================
+// =====================================================
 // GwTraderEngine
 // =====================================================
 
@@ -156,7 +152,8 @@ GwTraderEnginePtr gwengine_main(int argc, char** argv) {
     auto confcontent = read_whole_file(pfn);
 
     std::string errmsgs;
-    auto        appconfigs = parse_config_json_text(confcontent, errmsgs);
+
+    auto appconfigs = parse_config_json_text(confcontent, errmsgs);
     if (!errmsgs.empty()) {
         std::cerr << fmt::format("parse config file warn: {}", errmsgs) << std::endl;
         return nullptr;
