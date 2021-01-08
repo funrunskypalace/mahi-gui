@@ -1,0 +1,32 @@
+[
+  {
+    "StatusCode": 100,
+    "NotifyType": 1,
+    "Message": "多"
+  },
+  {
+    "StatusCode": 101,
+    "NotifyType": 1,
+    "Message": "空"
+  },
+  {
+    "StatusCode": 110,
+    "NotifyType": 1,
+    "Message": "开"
+  },
+  {
+    "StatusCode": 111,
+    "NotifyType": 1,
+    "Message": "平"
+  },
+  {
+    "StatusCode": 10404,
+    "NotifyType": 1,
+    "Message": "程序有效性验证失败(date)"
+  },
+  {
+    "StatusCode": 10405,
+    "NotifyType": 1,
+    "Message": "程序有效性验证失败(authcode)"
+  }
+]

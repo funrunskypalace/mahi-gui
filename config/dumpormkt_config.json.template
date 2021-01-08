@@ -1,0 +1,4 @@
+{
+  "market_data_path": "./market",
+  "instruments": ["IC2003@CFFEX@500"]
+}

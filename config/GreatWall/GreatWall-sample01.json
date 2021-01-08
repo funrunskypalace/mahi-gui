@@ -1,0 +1,212 @@
+{
+    "stop_time": "22:40",
+    "strategy_sdk": {
+        "server_addr": "tcp://127.0.0.1:12506"
+    },
+    "strategy_instances": [
+        {
+            "is_active": 1,
+            "is_active_desc": "0-inactive, 1-active",
+            "strategy_id": "stdohlc",
+            "strategy_inst_id": "my-stdohlc-static-001",
+            "config_file": "./../stdohlc_config.json",
+            "resume_type": 2,
+            "resume_type_desc": "1-resume, 2-quick",
+            "operation_user_info": "LOCAL#1001&123456"
+        }
+    ],
+    "market_plugin_instances": [
+        {
+            "is_active": 0,
+            "is_active_desc": "0-inactive, 1-active",
+            "plugin_id": "tfzqh5",
+            "plugin_inst_id": "tfzq-h5-reader-001",
+            "config_file": "./../tfzqh5reader_config.json",
+            "resume_type": 2,
+            "resume_type_desc": "1-resume, 2-quick",
+            "operation_user_info": "LOCAL#1001&123456"
+        },
+        {
+            "is_active": 1,
+            "is_active_desc": "0-inactive, 1-active",
+            "plugin_id": "tfmd",
+            "plugin_inst_id": "tfmdapi-mktplugin-001",
+            "config_file": "./../tfmd_config.json",
+            "resume_type": 2,
+            "resume_type_desc": "1-resume, 2-quick",
+            "operation_user_info": "LOCAL#1001&123456"
+        }
+    ],
+    "market_handlers": [
+        {
+            "is_active": 0,
+            "type": 1320,
+            "type_name": "OR-MarketHandler",
+            "unique_name": "or-mkt-handler-001",
+            "config_path": "./../",
+            "custom_config": {
+                "channel_id": 10002,
+                "currency_id": "CNY"
+            }
+        },
+        {
+            "is_active": 1,
+            "type": 1010,
+            "type_name": "MktPlugin-MarketHandler",
+            "unique_name": "mktplugin-mkt-handler-001",
+            "config_path": "./../",
+            "custom_config": {
+                "plugin_inst_id": "tfmdapi-mktplugin-001"
+            }
+        }
+    ],
+    "trade_interfaces": [
+        {
+            "is_active": 0,
+            "channel_id": 10002,
+            "channel_type": "X",
+            "channel_loadtype": "D",
+            "channel_loadid": "tradex",
+            "type_info": "TradeX_DBZQ_6.53",
+            "type_name": "TradeX",
+            "unique_name": "dbzq_tradex_27019725",
+            "ipv4_address": "121.43.74.163",
+            "ipv4_port": 7708,
+            "custom_config": {
+                "TdxCompanyID": 56,
+                "TdxBrokerIND": "JLDB",
+                "TdxClientVersion": "6.53",
+                "TdxSleepMsTrd": 300,
+                "TdxSleepMsQry": 300,
+                "BuySellCollateral": 1,
+                "TdxPagedQuery": 0
+            },
+            "investors": [
+                {
+                    "investor_id": 10010002,
+                    "user_id": "27019725",
+                    "account_code": "27019725",
+                    "password": "167168",
+                    "broker_id": "1",
+                    "investor_type": "8",
+                    "trading_codes": [
+                        {
+                            "exchange_id": "SH",
+                            "trading_code": "A593957683"
+                        },
+                        {
+                            "exchange_id": "SZ",
+                            "trading_code": "0274098665"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "is_active": 0,
+            "channel_id": 10002,
+            "channel_type": "5",
+            "channel_loadtype": "S",
+            "channel_loadid": "simulate",
+            "type_info": "OR_CHT_SIMULATE",
+            "type_name": "OR_CHT_SIMULATE",
+            "unique_name": "OR_CHT_SIMULATE.192.168.41.62",
+            "ipv4_address": "192.168.41.62",
+            "ipv4_port": 10900,
+            "custom_config": {},
+            "investors": [
+                {
+                    "investor_id": 10010002,
+                    "user_id": "456789",
+                    "account_code": "456789",
+                    "password": "******",
+                    "broker_id": "9999",
+                    "investor_type": "8",
+                    "trading_codes": []
+                }
+            ]
+        },
+        {
+            "is_active": 0,
+            "channel_id": 10001,
+            "channel_type": "2",
+            "channel_loadtype": "D",
+            "channel_loadid": "ctpse",
+            "type_info": "CTP",
+            "type_name": "CTP_SE",
+            "unique_name": "kc_ctp_001",
+            "ipv4_address": "",
+            "ipv4_port": 0,
+            "custom_config": {
+                "StartupQryPosOrderTrade": true,
+                "CtpRunningMode": "debug_tr_simnow",
+                "CtpTradeAddr": "tcp://180.168.146.187:10100",
+                "CtpMdAddr": "tcp://180.169.227.244:43213",
+                "BrokerID": "9999",
+                "CtpAuthCode": "0000000000000000",
+                "CtpProductInfo": "client_fhsoft",
+                "CtpAppId": "client_fhsoft_1.0.0",
+                "CloseHistoryType": "0"
+            },
+            "investors": [
+                {
+                    "investor_id": 10010001,
+                    "user_id": "126399",
+                    "account_code": "126399",
+                    "password": "vpn17560149",
+                    "broker_id": "9999",
+                    "investor_type": "9",
+                    "trading_codes": []
+                }
+            ]
+        },
+        {
+            "is_active": 0,
+            "channel_id": 10001,
+            "channel_type": "2",
+            "channel_loadtype": "D",
+            "channel_loadid": "ctpse",
+            "type_info": "CTP",
+            "type_name": "CTP_SE",
+            "unique_name": "ctp_ntr_simnow_001",
+            "ipv4_address": "",
+            "ipv4_port": 0,
+            "custom_config": {
+                "StartupQryPosOrderTrade": true,
+                "CtpRunningMode": "debug_ntr_simnow",
+                "CtpTradeAddr": "tcp://180.168.146.187:10130",
+                "CtpMdAddr": "tcp://180.168.146.187:10131",
+                "BrokerID": "9999",
+                "CtpAuthCode": "0000000000000000",
+                "CtpProductInfo": "client_fhsoft",
+                "CtpAppId": "client_fhsoft_1.0.0",
+                "CloseHistoryType": "0"
+            },
+            "investors": [
+                {
+                    "investor_id": 10010001,
+                    "user_id": "126399",
+                    "account_code": "126399",
+                    "password": "vpn17560149",
+                    "broker_id": "9999",
+                    "investor_type": "9",
+                    "trading_codes": []
+                }
+            ]
+        }
+    ],
+    "startup_commands": [
+        "strategy start yuan_export y-001",
+        ""
+    ],
+    "startup_commands2": [
+        "plugin start tfmd tfmdapi-mktplugin-001",
+        ""
+    ],
+    "data_path": "./../data/",
+    "log_path": "./../logs/",
+    "resource_path": "./../config/",
+    "auth_code": "openorder",
+    "license_path": ".",
+    "instance_config_path": "./../instance_config/"
+}

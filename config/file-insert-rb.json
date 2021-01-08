@@ -1,0 +1,40 @@
+{
+  "TimeoutMicroseconds" : 3000000,
+  "CancelOnTimeout" : true,
+  "CloseOnTimeout" : false,
+  "ExposureDeadlineMicroseconds" : 13000000,
+  "MaxCancelTimes": 3,
+  "CancelIntervalMicro": 1000000,
+  "MaxSendTimes": 3,
+  "Orders" : [
+    {
+      "MaxSendTimes": 3,
+      "ChannelID": 10001,
+      "InvestorID": 10010001,
+      "ExID": "SHFE",
+      "InsID": "rb2001",
+      "Direction": "0",
+      "OffsetFlag": "0",
+      "HedgeFlag": "1",
+      "ProductClass": "1",
+      "LimitPrice": 3800,
+      "VolumeTotalOriginal": 1,
+      "Suppressing": true,
+      "NeedReSend": false
+    },
+    {
+      "ChannelID": 10001,
+      "InvestorID": 10010001,
+      "ExID": "SHFE",
+      "InsID": "rb2001",
+      "Direction": "1",
+      "OffsetFlag": "3",
+      "HedgeFlag": "1",
+      "ProductClass": "1",
+      "LimitPrice": 3880,
+      "VolumeTotalOriginal": 1,
+      "Suppressing": true,
+      "NeedReSend": true
+    }
+  ]
+}

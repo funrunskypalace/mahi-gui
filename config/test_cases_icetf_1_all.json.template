@@ -1,0 +1,705 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$comment": "test cases for IC-ETF strategy. 仅测试1手IC委托。 test_cases can support concurrent = 1 with multiple transaction_ref_ids, then all transactions will be processed one-by-one.",
+  "$id": "icetf-all-001",
+  "first_trade_id": 370001,
+  "first_sysorderid": 1000001,
+  "at_mode": "realtime",
+  "at_mode_description": "'realtime' - insert orders on realtime. 'manual' - using pre-defined transaction.",
+  "realtime_matches": [
+    "M_50605",
+    "M_60805"
+  ],
+  "transactions": [
+    {
+      "ref_id": "transaction_case_001",
+      "description": "1手IC多头开仓，对应ETF510500融券卖出184800股。",
+      "TimeoutMicroseconds": 3000000,
+      "CancelOnTimeout": true,
+      "CloseOnTimeout": false,
+      "ExposureDeadlineMicroseconds": 13000000,
+      "MaxCancelTimes": 3,
+      "CancelIntervalMicro": 1000000,
+      "MaxSendTimes": 3,
+      "MaxAmountDiffPercent": 0.05,
+      "Orders": [
+        {
+          "MaxSendTimes": 3,
+          "ChannelID": 10001,
+          "InvestorID": 10010001,
+          "ExID": "CFFEX",
+          "InsID": "IC2001",
+          "Direction": "0",
+          "OffsetFlag": "0",
+          "HedgeFlag": "1",
+          "ProductClass": "1",
+          "LimitPrice": 5230.0,
+          "VolumeTotalOriginal": 1,
+          "Suppressing": true,
+          "NeedReSend": false
+        },
+        {
+          "ChannelID": 10002,
+          "InvestorID": 10010002,
+          "ExID": "SH",
+          "InsID": "510500",
+          "Direction": "F",
+          "OffsetFlag": "3",
+          "HedgeFlag": "1",
+          "ProductClass": "1",
+          "LimitPrice": 5.628,
+          "VolumeTotalOriginal": 184800,
+          "Suppressing": true,
+          "NeedReSend": true
+        }
+      ]
+    }
+  ],
+  "test_cases": [
+    {
+      "case_no": "tc-01005",
+      "description": "IC一手直接废单",
+      "enabled": true,
+      "concurrent": 1,
+      "matcher": {
+        "hit_percent": 0.5,
+        "hit_percent_step": 0.1,
+        "slip_page": 0
+      },
+      "transaction_ref_ids": [
+        "transaction_case_001"
+      ],
+      "match_ref_ids": [
+        "M_50105",
+        "M_60005"
+      ]
+    },
+    {
+      "case_no": "tc-01015",
+      "description": "IC一手直接撤单",
+      "enabled": true,
+      "concurrent": 1,
+      "matcher": {
+        "hit_percent": 0.5,
+        "hit_percent_step": 0.1,
+        "slip_page": 0
+      },
+      "transaction_ref_ids": [
+        "transaction_case_001"
+      ],
+      "match_ref_ids": [
+        "M_50125",
+        "M_60005"
+      ]
+    },
+    {
+      "case_no": "tc-01025",
+      "description": "两腿均成交",
+      "enabled": true,
+      "concurrent": 1,
+      "matcher": {
+        "hit_percent": 0.5,
+        "hit_percent_step": 0.1,
+        "slip_page": 0
+      },
+      "transaction_ref_ids": [
+        "transaction_case_001"
+      ],
+      "match_ref_ids": [
+        "M_50605",
+        "M_60245"
+      ]
+    }
+  ],
+  "special_matches": [
+    {
+      "ref_id": "M_50105",
+      "match_category": 2006,
+      "exchange_id": "CFFEX",
+      "instrument_id": "IC2001",
+      "description": "IC一手直接废单",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "6",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        }
+      ]
+    },
+    {
+      "ref_id": "M_50125",
+      "match_category": 2006,
+      "exchange_id": "CFFEX",
+      "instrument_id": "IC2001",
+      "description": "IC一手直接撤单(CTP撤单等同于废单)",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "6",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        }
+      ]
+    },
+    {
+      "ref_id": "M_50205",
+      "match_category": 2006,
+      "exchange_id": "CFFEX",
+      "instrument_id": "IC2001",
+      "description": "IC一手先正报再废单",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "0",
+          "~description": "ctp - a corresponds to openorder - 0",
+          "order_sys_id": "",
+          "front_id": 5377,
+          "session_id": -1696464837
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "7",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        }
+      ]
+    },
+    {
+      "ref_id": "M_50305",
+      "match_category": 2006,
+      "exchange_id": "CFFEX",
+      "instrument_id": "IC2001",
+      "description": "IC一手已报后无成交",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "1",
+          "order_sys_id": "",
+          "front_id": 5377,
+          "session_id": -1696464837
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "2",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        }
+      ]
+    },
+    {
+      "ref_id": "M_50405",
+      "match_category": 2006,
+      "exchange_id": "CFFEX",
+      "instrument_id": "IC2001",
+      "description": "IC一手已报后仅状态2返回，无成交",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "2",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        }
+      ]
+    },
+    {
+      "ref_id": "M_50505",
+      "match_category": 2006,
+      "exchange_id": "CFFEX",
+      "instrument_id": "IC2001",
+      "description": "IC一手已报后仅成交返回",
+      "rsp_seq": [
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "     8386425",
+          "traded_volume": 1,
+          "traded_price": 5230.0,
+          "cancel_flag": "1"
+        }
+      ]
+    },
+    {
+      "ref_id": "M_50605",
+      "match_category": 2006,
+      "exchange_id": "CFFEX",
+      "instrument_id": "IC2001",
+      "description": "IC一手已报后先成交后委托更新",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "1",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        },
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "     8386425",
+          "traded_volume": 1,
+          "traded_price": 5230.0,
+          "cancel_flag": "1"
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 1,
+          "order_status": "2",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 1,
+          "order_status": "4",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        }
+      ]
+    },
+    {
+      "ref_id": "M_50705",
+      "match_category": 2006,
+      "exchange_id": "CFFEX",
+      "instrument_id": "IC2001",
+      "description": "IC一手已报先委托更新后成交再委托更新",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "1",
+          "order_sys_id": "",
+          "front_id": 5377,
+          "session_id": -1696464837
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 1,
+          "order_status": "2",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        },
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "     8386425",
+          "traded_volume": 1,
+          "traded_price": 5230.0,
+          "cancel_flag": "1"
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 1,
+          "order_status": "4",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        }
+      ]
+    },
+    {
+      "ref_id": "M_50805",
+      "match_category": 2006,
+      "exchange_id": "CFFEX",
+      "instrument_id": "IC2001",
+      "description": "IC一手已报先委托更新再委托更新后成交",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "1",
+          "order_sys_id": "",
+          "front_id": 5377,
+          "session_id": -1696464837
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 1,
+          "order_status": "2",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 1,
+          "order_status": "4",
+          "order_sys_id": "     8386425",
+          "front_id": 5377,
+          "session_id": -1696464837
+        },
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "     8386425",
+          "traded_volume": 1,
+          "traded_price": 5230.0,
+          "cancel_flag": "1"
+        }
+      ]
+    },
+    {
+      "ref_id": "M_60005",
+      "match_category": 2006,
+      "exchange_id": "SH",
+      "instrument_id": "510500",
+      "description": "ETF直接废单",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "7",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        }
+      ]
+    },
+    {
+      "ref_id": "M_60105",
+      "match_category": 2006,
+      "exchange_id": "SH",
+      "instrument_id": "510500",
+      "description": "ETF直接撤单",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "6",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        }
+      ]
+    },
+    {
+      "ref_id": "M_60205",
+      "match_category": 2006,
+      "exchange_id": "SH",
+      "instrument_id": "510500",
+      "description": "ETF直接撤单成交回报",
+      "rsp_seq": [
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "6425",
+          "traded_volume": 0,
+          "traded_price": 0,
+          "cancel_flag": "2"
+        }
+      ]
+    },
+    {
+      "ref_id": "M_60235",
+      "match_category": 2006,
+      "exchange_id": "SH",
+      "instrument_id": "510500",
+      "description": "ETF直接委托终结后成交",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 184800,
+          "order_status": "4",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "6425",
+          "traded_volume": 184800,
+          "traded_price": 5.628,
+          "cancel_flag": "1"
+        }
+      ]
+    },
+    {
+      "ref_id": "M_60245",
+      "match_category": 2006,
+      "exchange_id": "SH",
+      "instrument_id": "510500",
+      "description": "ETF直接成交后委托终结",
+      "rsp_seq": [
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "6425",
+          "traded_volume": 184800,
+          "traded_price": 5.628,
+          "cancel_flag": "1"
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 184800,
+          "order_status": "4",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        }
+      ]
+    },
+    {
+      "ref_id": "M_60305",
+      "match_category": 2006,
+      "exchange_id": "SH",
+      "instrument_id": "510500",
+      "description": "ETF直接全部成交",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "1",
+          "order_sys_id": "",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "2",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "6425",
+          "traded_volume": 184800,
+          "traded_price": 5.628,
+          "cancel_flag": "1"
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "4",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        }
+      ]
+    },
+    {
+      "ref_id": "M_60405",
+      "match_category": 2006,
+      "exchange_id": "SH",
+      "instrument_id": "510500",
+      "description": "ETF直接全部成交（先状态变化再成交）",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "1",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "2",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 184800,
+          "order_status": "4",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "6425",
+          "traded_volume": 184800,
+          "traded_price": 5.628,
+          "cancel_flag": "1"
+        }
+      ]
+    },
+    {
+      "ref_id": "M_60505",
+      "match_category": 2006,
+      "exchange_id": "SH",
+      "instrument_id": "510500",
+      "description": "ETF直接全部成交（先成交再状态变化）",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "1",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "6425",
+          "traded_volume": 184800,
+          "traded_price": 5.628,
+          "cancel_flag": "1"
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "2",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 184800,
+          "order_status": "4",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        }
+      ]
+    },
+    {
+      "ref_id": "M_60605",
+      "match_category": 2006,
+      "exchange_id": "SH",
+      "instrument_id": "510500",
+      "description": "ETF直接全部成交（先成交再状态变化）",
+      "rsp_seq": [
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "6425",
+          "traded_volume": 184800,
+          "traded_price": 5.628,
+          "cancel_flag": "1"
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "1",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "2",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 184800,
+          "order_status": "4",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        }
+      ]
+    },
+    {
+      "ref_id": "M_60805",
+      "match_category": 2006,
+      "exchange_id": "SH",
+      "instrument_id": "510500",
+      "description": "ETF直接部分成交（先成交再状态变化）",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "1",
+          "order_sys_id": "",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "2",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "6425",
+          "traded_volume": 84800,
+          "traded_price": 5.628,
+          "cancel_flag": "1"
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 84800,
+          "order_status": "3",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnTrade",
+          "trade_id": 0,
+          "order_sys_id": "6425",
+          "traded_volume": 100000,
+          "traded_price": 5.628,
+          "cancel_flag": "1"
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 184800,
+          "order_status": "4",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        }
+      ]
+    },
+    {
+      "ref_id": "M_60905",
+      "match_category": 2006,
+      "exchange_id": "SH",
+      "instrument_id": "510500",
+      "description": "ETF委托确认后无成交",
+      "rsp_seq": [
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "1",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        },
+        {
+          "type": "RtnOrder",
+          "volume_traded": 0,
+          "order_status": "2",
+          "order_sys_id": "6425",
+          "front_id": 0,
+          "session_id": 0
+        }
+      ]
+    }
+  ]
+}

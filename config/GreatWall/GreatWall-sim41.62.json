@@ -1,0 +1,83 @@
+{
+    "stop_time": "22:40",
+    "market_handlers": [
+        {
+            "type": 1,
+            "type_name": "TFMdApi",
+            "unique_name": "tfmdapi_test",
+            "config_path": "./../"
+        }
+    ],
+    "market_filters": [
+        {
+            "type": 1000,
+            "type_name": "enhance_quot",
+            "unique_name": "tf_ic500_realtime",
+            "config_path": "./../"
+        }
+    ],
+    "strategy_instances": [
+        {
+            "type_name": "arbitrage_tests",
+            "unique_name": "test_trade01"
+        }
+    ],
+    "trade_interfaces": [
+        {
+            "is_active": 1,
+            "channel_id": 10002,
+            "channel_type": "5",
+            "type_info": "OR_CHT_SIMULATE",
+            "type_name": "OR_CHT_SIMULATE",
+            "unique_name": "OR_CHT_SIMULATE.192.168.41.62",
+            "ipv4_address": "192.168.41.62",
+            "ipv4_port": 10900,
+            "custom_config": {},
+            "investors": [
+                {
+                    "investor_id": 111,
+                    "user_id": "456789",
+                    "account_code": "456789",
+                    "password": "123456",
+                    "broker_id": "9999"
+                }
+            ]
+        },
+        {
+            "is_active": 1,
+            "channel_id": 10001,
+            "channel_type": "2",
+            "type_info": "CTP",
+            "type_name": "CTPSE",
+            "unique_name": "ctp_simnow_tr_001",
+            "channel_loadtype": "D",
+            "channel_loadid": "ctpse",
+            "resume_type": 2,
+            "ipv4_address": "",
+            "ipv4_port": 0,
+            "custom_config": {
+                "StartupQryPosOrderTrade": true,
+                "CtpRunningMode": "debug_tr_simnow",
+                "CtpTradeAddr": "tcp://180.168.146.187:10100",
+                "CtpMdAddr": "tcp://180.169.227.244:43213",
+                "BrokerID": "9999",
+                "CtpAuthCode": "0000000000000000",
+                "CtpProductInfo": "client_fhsoft",
+                "CtpAppId": "client_fhsoft_1.0.0"
+            },
+            "investors": [
+                {
+                    "investor_id": 10010001,
+                    "user_id": "143292",
+                    "account_code": "143292",
+                    "password": "wangfeng123"
+                }
+            ]
+        }
+    ],
+    "data_path": "./../data/",
+    "log_path": "./../logs/",
+    "resource_path": "./../config/",
+    "auth_code": "openorder",
+    "license_path": "."
+}

@@ -1,0 +1,73 @@
+{
+    "stop_time": "22:40",
+    "market_handlers": [],
+    "trade_interfaces": [
+        {
+            "is_active": 1,
+            "channel_id": 10002,
+            "channel_type": "X",
+            "type_info": "TradeX_ZXJT_7.38",
+            "type_name": "TradeX",
+            "channel_loadtype": "D",
+            "channel_loadid": "tradex",
+            "resume_type": 2,
+            "unique_name": "kc_tradex_99168545.C",
+            "ipv4_address": "202.130.235.187",
+            "ipv4_port": 7718,
+            "custom_config": {
+                "TdxCompanyID": 18,
+                "TdxClientVersion": "7.38",
+                "TdxSleepMsTrd": 100,
+                "TdxSleepMsQry": 100,
+                "BuySellCollateral": 1,
+                "TdxPagedQuery": 0
+            },
+            "investors": [
+                {
+                    "investor_id": 10010002,
+                    "user_id": "99168545",
+                    "account_code": "99168545",
+                    "password": "360615",
+                    "broker_id": "9999"
+                }
+            ]
+        },
+        {
+            "is_active": 1,
+            "channel_id": 10001,
+            "channel_type": "2",
+            "type_info": "CTP",
+            "type_name": "CTPSE",
+            "channel_loadtype": "D",
+            "channel_loadid": "ctpse",
+            "resume_type": 2,
+            "unique_name": "ctp_simnow_tr_001",
+            "ipv4_address": "",
+            "ipv4_port": 0,
+            "custom_config": {
+                "StartupQryPosOrderTrade": true,
+                "CtpRunningMode": "debug_tr_simnow",
+                "CtpTradeAddr": "tcp://180.168.146.187:10100",
+                "CtpMdAddr": "tcp://180.169.227.244:43213",
+                "BrokerID": "9999",
+                "CtpAuthCode": "0000000000000000",
+                "CtpProductInfo": "client_fhsoft",
+                "CtpAppId": "client_fhsoft_1.0.0"
+            },
+            "investors": [
+                {
+                    "investor_id": 10010001,
+                    "user_id": "143292",
+                    "account_code": "143292",
+                    "password": "wangfeng123",
+                    "broker_id": "9999"
+                }
+            ]
+        }
+    ],
+    "data_path": "./../data/",
+    "log_path": "./../logs/",
+    "resource_path": "./../config/",
+    "auth_code": "openorder",
+    "license_path": "."
+}

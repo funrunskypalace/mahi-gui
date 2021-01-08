@@ -21,6 +21,9 @@
 using namespace mahi::gui;
 using namespace mahi::util;
 
+#define ITEM_COUNT 100
+#define DATA_RESERVE_COUNT 1000
+
 struct PlotItem {
     std::vector<ImVec2> data;
     ImVec4 color;
@@ -32,23 +35,23 @@ public:
     PlotBench() : Application(500,500,"Plots Benchmark") { 
         set_vsync(false);
         ImGui::DisableViewports();
-        for (int i = 0; i < 100; ++i)
+        for (int i = 0; i < ITEM_COUNT; ++i)
         {
             PlotItem item;
-            item.data.reserve(1000);
+            item.data.reserve(DATA_RESERVE_COUNT);
             item.color = random_color();
             item.label = fmt::format("item_{}",i);
             float y = i * 0.01f;
-            for (int i = 0; i < 1000; ++i)
+            for (int i = 0; i < DATA_RESERVE_COUNT; ++i)
                 item.data.push_back(ImVec2(i*0.001f, y + (float)random_range(-0.01,0.01)));
             items.emplace_back(std::move(item));
         }
     };
     void update() override {
         if (animate) {
-            for (int i = 0; i < 100; ++i) {
+            for (int i = 0; i < ITEM_COUNT; ++i) {
                 float y = i * 0.01f;
-                for (int j = 0; j < 1000; ++j) {
+                for (int j = 0; j < DATA_RESERVE_COUNT; ++j) {
                     items[i].data[j].x = j*0.001f;
                     items[i].data[j].y = y + (float)random_range(-0.01,0.01);
                 }
@@ -70,7 +73,7 @@ public:
         ImGui::Text("%lu lines, 1000 pts ea. @ %.3f FPS", items.size(), ImGui::GetIO().Framerate);
         if (ImPlot::BeginPlot("##Plot", NULL, NULL, ImVec2(-1,-1), ImPlotFlags_NoChild)) {
             if (render) {         
-                for (int i = 0; i < 100; ++i) {
+                for (int i = 0; i < ITEM_COUNT; ++i) {
                     ImPlot::PushStyleColor(ImPlotCol_Line, items[i].color);
                     ImPlot::PlotLine(items[i].label.c_str(), &items[i].data[0].x, &items[i].data[0].y, items[i].data.size(), 0, 8);
                     ImPlot::PopStyleColor();

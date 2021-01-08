@@ -1,0 +1,47 @@
+{
+    "stop_time": "22:40",
+    "market_handlers": [
+        {
+            "type": 1,
+            "type_name": "OrMarket",
+            "unique_name": "or_market_proxy",
+            "custom_config": {
+                "channel_id": 10003,
+                "currency_id": "USD"
+            },
+            "config_path": ""
+        }
+    ],
+    "trade_interfaces": [
+        {
+            "channel_id": 10003,
+            "channel_type": "I",
+            "type_info": "ibtws",
+            "type_name": "ibtws_simulate",
+            "unique_name": "ibtws_10003",
+            "ipv4_address": "127.0.0.1",
+            "ipv4_port": 7497,
+            "custom_config": {
+                "IBTwsChannelID": "A001",
+                "CurrencyID": "USD",
+                "MarketDataType": 4
+            },
+            "investors": [
+                {
+                    "investor_id": 10010003,
+                    "user_id": "wzq888510",
+                    "account_code": "DU1735364",
+                    "password": "wang86867165",
+                    "broker_id": "0",
+                    "investor_type": "0",
+                    "trading_codes": []
+                }
+            ]
+        }
+    ],
+    "data_path": "./../data/",
+    "log_path": "./../logs/",
+    "resource_path": "./../config/",
+    "auth_code": "openorder",
+    "license_path": "."
+}

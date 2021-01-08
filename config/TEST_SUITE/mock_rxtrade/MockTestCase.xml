@@ -1,0 +1,9 @@
+<ResponseSettings ResponseMode = "Template"  TemplateName="Filled" >
+	<RspOrder OrderSysID = "" CounterOrderID = "" SeatID = "" DelayUs = "0"/>
+	<RtnOrder OrderStatus = "1" OrderTraded = "0" DelayUs = "0" />
+	<RtnOrder OrderStatus = "2" OrderTraded = "0" DelayUs = "0" />
+	<RtnTrade TradedVolume = "500" TradedPrice = "10" DelayUs = "0"/>
+	<RtnOrder OrderStatus = "3" OrderTraded = "500" DelayUs = "0" />
+	<RtnTrade TradedVolume = "500" TradedPrice = "10" DelayUs = "0"/>
+	<RtnOrder OrderStatus = "4" OrderTraded = "1000" DelayUs = "0" />
+</ResponseSettings>
