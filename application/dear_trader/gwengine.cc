@@ -64,9 +64,6 @@ or_productclass_e market_data_to_product_class(int market_data) {
 // =====================================================
 void GwTraderEngine::init() {
     int curdate = get_current_date(false);
-    if (curdateInitialized(curdate)) {
-        return;
-    }
     make_directory_tree(appConfigs()->data_path.c_str());
     new_md_data_ = std::make_shared<std::list<ORDepthMarketDataFieldPtr>>();
 }

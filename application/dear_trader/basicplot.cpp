@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <iostream>
-#include "gwengine.h"
+#include "trader.h"
 
 #ifdef _MSC_VER
 #define sprintf sprintf_s
@@ -23,45 +23,75 @@ inline T RandomRange(T min, T max) {
 
 // utility structure for realtime plot
 struct ScrollingBuffer {
-    int              MaxSize;
-    ImVector<double> DataX;
-    ImVector<double> DataY;
+    int MaxSize;
+    int Offset;
+    ImVector<ImVec2> Data;
     ScrollingBuffer() {
         MaxSize = 2000;
-        DataX.reserve(MaxSize);
-        DataY.reserve(MaxSize);
+        Offset  = 0;
+        Data.reserve(MaxSize);
     }
-    void AddPoint(double x, double y) {
-        DataX.push_back(x);
-        DataY.push_back(y);
+    void AddPoint(float x, float y) {
+        if (Data.size() < MaxSize)
+            Data.push_back(ImVec2(x, y));
+        else {
+            Data[Offset] = ImVec2(x, y);
+            Offset       = (Offset + 1) % MaxSize;
+        }
     }
-    void Erase(int maxRemain = 0) {
-        if (DataX.size() > 0) {
-            DataX.shrink(std::max(maxRemain, DataX.size()));
-            DataY.shrink(std::max(maxRemain, DataY.size()));
+    void Erase() {
+        if (Data.size() > 0) {
+            Data.shrink(0);
+            Offset = 0;
         }
     }
 };
 using ScrollingBufferPtr = std::shared_ptr<ScrollingBuffer>;
 
-// utility structure for realtime plot
-struct RollingBuffer {
-    float            Span;
-    ImVector<ImVec2> Data;
-    RollingBuffer() {
-        Span = 10.0f;
-        Data.reserve(2000);
+// Huge data used by Time Formatting example (~500 MB allocation!)
+struct HugeTimeData {
+    HugeTimeData(double min) {
+        Ts = new double[Size];
+        Ys = new double[Size];
+        for (int i = 0; i < Size; ++i) {
+            Ts[i] = min + i;
+            Ys[i] = GetY(Ts[i]);
+        }
     }
-    void AddPoint(float x, float y) {
-        float xmod = fmodf(x, Span);
-        if (!Data.empty() && xmod < Data.back().x)
-            Data.shrink(0);
-        Data.push_back(ImVec2(xmod, y));
+    ~HugeTimeData() {
+        delete[] Ts;
+        delete[] Ys;
     }
+    static double GetY(double t) {
+        return 0.5 + 0.25 * sin(t / 86400 / 12) + 0.005 * sin(t / 3600);
+    }
+    double *Ts;
+    double *Ys;
+    static const int Size = 60 * 60 * 24 * 366;
 };
+using HugeTimeDataPtr = std::shared_ptr<HugeTimeData>;
 
-void ShowBasicWindow(GwTraderEnginePtr& trader) {
-    bool show_login = false;
+
+
+void MyApp::ShowBasicWindow() {
+    bool             show_login   = false;
+    bool             show_close   = true;
+    ImGuiWindowFlags window_flags = 0;
+    window_flags |= ImGuiWindowFlags_MenuBar;
+
+    // We specify a default position/size in case there's no data in the .ini file.
+    // We only do it to make the demo applications a little more welcoming, but typically this isn't
+    // required.
+    ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(550, 680), ImGuiCond_FirstUseEver);
+
+    // Main body of the Demo window starts here.
+    if (!ImGui::Begin("Dear Trader", &show_close, window_flags)) {
+        // Early out if the window is collapsed, as an optimization.
+        ImGui::End();
+        return;
+    }
+
     if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("Tools")) {
             ImGui::MenuItem("Login", NULL, &show_login);
@@ -71,54 +101,53 @@ void ShowBasicWindow(GwTraderEnginePtr& trader) {
     }
 
     if (ImGui::CollapsingHeader("Configuration")) {
-        // App logic and/or ImGui code goes here
-        ImGui::BulletText("Move your mouse to change the data!");
-        ImGui::BulletText("This example assumes 60 FPS. Higher FPS requires larger buffer size.");
-        static std::unordered_map<std::string, ScrollingBufferPtr> sdata2;
-        // static RollingBuffer   rdata1, rdata2;
-        ImVec2 mouse = ImGui::GetMousePos();
-        // static float           t     = 0;
-        // t += ImGui::GetIO().DeltaTime;
-        // sdata1.AddPoint(t, mouse.x * 0.0005f);
-        // rdata1.AddPoint(t, mouse.x * 0.0005f);
-        // sdata2.AddPoint(t, mouse.y * 0.0005f);
-        // rdata2.AddPoint(t, mouse.y * 0.0005f);
-        auto data = trader->fetch();
-        for (auto it = data->cbegin(); it != data->cend(); ++it) {
-            auto kmd = (*it);
-            if (0 == today_start_) {
-                today_start_ = parse_milliseconds(kmd->TradingDay, 90000000, false);
-                today_end_   = parse_milliseconds(kmd->TradingDay, 150000000, false);
-            }
-            auto itemit = sdata2.find(kmd->InstrumentID);
-            if (sdata2.cend() == itemit) {
-                auto mmt = sdata2.emplace(std::make_pair(std::string(kmd->InstrumentID),
-                                                         std::make_shared<ScrollingBuffer>()));
-                itemit   = mmt.first;
-            }
-            auto tm = parse_milliseconds(kmd->TradingDay, kmd->UpdateMillisec, false);
-            (*itemit).second->AddPoint(tm, (kmd->LastPrice / kmd->PreClosePrice) - 1);
-            // maxy_ = std::max(maxy_, kmd->PreClosePrice * 1.1);
-        }
+    }
 
-        static ImPlotAxisFlags xt_axis = ImPlotAxisFlags_Time;
-        static ImPlotAxisFlags rt_axis = ImPlotAxisFlags_NoTickLabels;
-        ImPlot::SetNextPlotLimitsX(today_start_, today_end_, ImGuiCond_Always);
-        ImPlot::SetNextPlotLimitsY(-0.3, 0.3 /*maxy_*/, ImGuiCond_Always);
-        if (ImPlot::BeginPlot("##Scrolling", NULL, NULL, ImVec2(-1, 550), 0, xt_axis,
-                              rt_axis | ImPlotAxisFlags_LockMin)) {
-            for (auto it = sdata2.cbegin(); it != sdata2.cend(); ++it) {
-                auto itemdata = it->second;
-                if (itemdata->DataX.size() > 0) {
-                    ImPlot::PlotLine<double>(it->first.c_str(), itemdata->DataX.Data,
-                                             itemdata->DataY.Data, itemdata->DataX.size());
+    if (ImGui::CollapsingHeader("Tick Graph")) {
+        ImGui::BeginGroup();
+        static char text[1024 * 16]      = "";
+        static ImGuiInputTextFlags flags = ImGuiInputTextFlags_AllowTabInput;
+
+        ImGui::InputTextMultiline("InstrumentID", text, IM_ARRAYSIZE(text),
+                                  ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 16), flags);
+        {
+            static std::unordered_map<std::string, RollingBufferPtr> plotlines;
+            //static bool show_lines = true;
+            //static bool show_fills = true;
+            //static float fill_ref  = 0;
+            //ImGui::Checkbox("Lines", &show_lines);
+            //ImGui::Checkbox("Fills", &show_fills);
+            //ImGui::SameLine();
+            if (ImGui::Button("Update")) {
+                dataeg_->loadMarketData(text);
+            } else {
+                dataeg_->iterate([&](InstrumentPackPtr &pack) -> void {
+                    auto it = plotlines.find(pack->insid);
+                    if (plotlines.cend() == it) {
+                        plotlines.insert(std::make_pair(pack->insid, std::make_shared<RollingBuffer>()));
+                        it = plotlines.find(pack->insid);
+                    }
+                    auto line = it->second;
+                    for (int i = 0; i < pack->buffer.Data.size(); ++i) {
+                        line->AddPoint(pack->buffer.Data[i].x, pack->buffer.Data[i].y);
+                    }
+                    pack->buffer.Data.clear();
+                });
+            }
+            //ImGui::DragFloat("Reference", &fill_ref, 1, -100, 500);
+
+            if (ImPlot::BeginPlot("Stock Prices", "Ticks", "Price")) {
+                for (auto line : plotlines) {
+                    ImPlot::PlotLine(line.first.c_str(), &line.second->Data[0].x,
+                                     &line.second->Data[0].y, line.second->Data.size(),
+                        0, 2 * sizeof(float));
                 }
+                ImPlot::EndPlot();
             }
-            ImPlot::EndPlot();
         }
+        ImGui::EndGroup();
     }
 
-    if (ImGui::CollapsingHeader("Volume History Strategy")) {
-        
-    }
+    // End of ShowDemoWindow()
+    ImGui::End();
 }
