@@ -1,7 +1,6 @@
 #include "pch/compat.h"
 
 #include "logger_wrapper.h"
-#include "fmt/format.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/rotating_file_sink.h"
 

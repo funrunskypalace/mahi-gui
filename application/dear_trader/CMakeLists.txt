@@ -17,6 +17,7 @@ set(ImPluginLibraryRef              implugin_$ENV{OSVER}$<$<CONFIG:Debug>:d>)
 
 add_definitions(-DPROTOBUF_USE_DLLS)
 add_definitions(-DSPDLOG_FMT_EXTERNAL)
+add_definitions(-DFMT_HEADER_ONLY=1)
 
 file(GLOB_RECURSE dear_trader_app_SRC
     "${MahiSrcDir}/src/pch/compat.h"

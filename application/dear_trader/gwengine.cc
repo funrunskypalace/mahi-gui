@@ -5,9 +5,8 @@
 #include "framework/common/logger.h"
 #include "ort/libor.h"
 #include "logger_wrapper.h"
-#include "fmt/format.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
-#include "spdlog/sinks/rotating_file_sink.h"
+#include "pch/compat.h"
+
 
 #include <thread>
 #include <filesystem>
@@ -163,7 +162,7 @@ GwTraderEnginePtr gwengine_main(int argc, char** argv) {
     }
 
     auto orfn = fmt::format("{}teor.GwTraderEngineer.log", appconfigs->log_path);
-    g_initLibOrderRouter(orfn.c_str(), spdlog::level::debug, false, MY_DEFAULT_LOG_FORMAT);
+    g_initLibOrderRouter(orfn.c_str(), debug, false, MY_DEFAULT_LOG_FORMAT);
     auto gwfn = fmt::format("{}greatwall.GwTraderEngineer.log", appconfigs->log_path);
     greatwall_init_global_log(gwfn.c_str(), "greatwall", debug, true, MY_DEFAULT_LOG_FORMAT);
 

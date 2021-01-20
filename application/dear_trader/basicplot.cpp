@@ -283,7 +283,7 @@ void MyApp::ShowExampleAppLog() {
     ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
     ImGui::Begin("Example: Log", p_open);
     dataeg_->fetchLogs([&](const LogInfoItemPtr& logitem)->void{
-        applog.AddLog("{}", logitem->logmsg);
+        applog.AddLog("%s\n", logitem->logmsg.c_str());
     });
     ImGui::End();
 
