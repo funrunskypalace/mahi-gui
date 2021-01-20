@@ -8,14 +8,14 @@
 using namespace imsimple;
 using namespace cycnoches::ort;
 
-using SafeDataPackCb = std::function<void(InstrumentPackPtr&)>;
-using SafeFetchLogCb = std::function<void(const std::string&)>;
-
 struct LogInfoItem {
     int level;
     std::string logmsg;
 };
-using LogInfoItemPtr=std::shared<LogInfoItem>;
+using LogInfoItemPtr=std::shared_ptr<LogInfoItem>;
+
+using SafeDataPackCb = std::function<void(InstrumentPackPtr&)>;
+using SafeFetchLogCb = std::function<void(const LogInfoItemPtr&)>;
 
 class DataEngine {
 public:

@@ -112,12 +112,12 @@ void MyApp::ShowBasicWindow() {
                                   ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 16), flags);
     }
 
-    if (ImGui::CollapsingHeader("Tick Graph")) {
+    if (ImGui::CollapsingHeader("HDF5 Reader")) {
         ImGui::BeginGroup();
         static char text[1024 * 16]      = "";
         static ImGuiInputTextFlags flags = ImGuiInputTextFlags_AllowTabInput;
 
-        ImGui::InputTextMultiline("InstrumentID", text, IM_ARRAYSIZE(text),
+        ImGui::InputTextMultiline("Command here", text, IM_ARRAYSIZE(text),
                                   ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 16), flags);
         {
             static std::unordered_map<std::string, RollingBufferPtr> plotlines;
@@ -145,15 +145,17 @@ void MyApp::ShowBasicWindow() {
                 });
             }
             // ImGui::DragFloat("Reference", &fill_ref, 1, -100, 500);
-
-            if (ImPlot::BeginPlot("Stock Prices", "Ticks", "Price")) {
-                for (auto line : plotlines) {
-                    ImPlot::PlotLine(line.first.c_str(), &line.second->Data[0].x,
-                                     &line.second->Data[0].y, line.second->Data.size(), 0,
-                                     2 * sizeof(float));
+            if (ImGui::CollapsingHeader("Graph")) {
+                if (ImPlot::BeginPlot("Stock Prices", "Ticks", "Price")) {
+                    for (auto line : plotlines) {
+                        ImPlot::PlotLine(line.first.c_str(), &line.second->Data[0].x,
+                            &line.second->Data[0].y, line.second->Data.size(), 0,
+                            2 * sizeof(float));
+                    }
+                    ImPlot::EndPlot();
                 }
-                ImPlot::EndPlot();
             }
+
         }
         ImGui::EndGroup();
     }
@@ -187,7 +189,7 @@ void ExampleAppLog::AddLog(const char* fmt, ...) IM_FMTARGS(2) {
             LineOffsets.push_back(old_size + 1);
 }
 
-void ExampleAppLog::Draw(const char* title, bool* p_open = NULL) {
+void ExampleAppLog::Draw(const char* title, bool* p_open) {
     if (!ImGui::Begin(title, p_open)) {
         ImGui::End();
         return;
@@ -273,19 +275,19 @@ void ExampleAppLog::Draw(const char* title, bool* p_open = NULL) {
 void MyApp::ShowExampleAppLog() {
     bool show_close = true;
     bool* p_open    = &show_close;
-    static ExampleAppLog log;
+    static ExampleAppLog applog;
 
     // For the demo: add a debug button _BEFORE_ the normal log window contents
     // We take advantage of a rarely used feature: multiple calls to Begin()/End() are appending to
     // the _same_ window. Most of the contents of the window will be added by the log.Draw() call.
     ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
     ImGui::Begin("Example: Log", p_open);
-    dataeg_->fetchLogs([&](const std::string& log)->void{
-                log.AddLog("{}", log);
+    dataeg_->fetchLogs([&](const LogInfoItemPtr& logitem)->void{
+        applog.AddLog("{}", logitem->logmsg);
     });
     ImGui::End();
 
     // Actually call in the regular Log helper (which will Begin() into the same window as we just
     // did)
-    log.Draw("Example: Log", p_open);
+    applog.Draw("HDF5 Reader: Log", p_open);
 }
