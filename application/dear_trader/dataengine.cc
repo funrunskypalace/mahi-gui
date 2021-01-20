@@ -19,7 +19,7 @@ void DataEngine::loadMarketData(const std::string& json) {
         instruments_.clear();
     }
     if (nullptr == hdf5_plugin_) {
-        hdf5_plugin_ = plugin::load_plugin_dynamically("D:/win64/implugin/app_home/plugins",
+        hdf5_plugin_ = plugin::load_plugin_dynamically("D:/prod/win64/implugin/app_home/plugins",
             "./../logs/", imsimple::info, imsimple::err, "hdf5reader");
         if (nullptr == hdf5_plugin_)
             return;

@@ -1,5 +1,10 @@
+#include "pch/compat.h"
+
 #include "logger_wrapper.h"
-      
+#include "fmt/format.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/sinks/rotating_file_sink.h"
+
 std::shared_ptr<spdlog::logger> LoggerWrapper::getLogger(const std::string& logger_name) {
     static std::map<std::string, std::shared_ptr<spdlog::logger> > map_;
 

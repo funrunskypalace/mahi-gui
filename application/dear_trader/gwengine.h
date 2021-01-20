@@ -5,7 +5,6 @@
 #include <future>
 #include <atomic>
 
-#include "logger_wrapper.h"
 #include "framework/router/trade_engine_base.h"
 
 using namespace cycnoches::ort;

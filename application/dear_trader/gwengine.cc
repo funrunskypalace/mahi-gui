@@ -1,14 +1,20 @@
+#include "pch/compat.h"
+
 #include "gwengine.h"
 #include "framework/router/parser.h"
 #include "framework/common/logger.h"
 #include "ort/libor.h"
+#include "logger_wrapper.h"
+#include "fmt/format.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/sinks/rotating_file_sink.h"
 
 #include <thread>
 #include <filesystem>
 
-std::shared_ptr<spdlog::logger> LOGGER = nullptr;
+std::shared_ptr<spdlog::logger> MY_LOGGER = nullptr;
 
-const char* DEFAULT_LOG_FORMAT = "[%Y-%m-%d %T.%e][%t][%l][%n] %v";
+const char* MY_DEFAULT_LOG_FORMAT = "[%Y-%m-%d %T.%e][%t][%l][%n] %v";
 
 // =====================================================
 //
@@ -16,16 +22,16 @@ const char* DEFAULT_LOG_FORMAT = "[%Y-%m-%d %T.%e][%t][%l][%n] %v";
 
 void GwTraderEngine::notifyTradeEngineStatus(const std::string& statusCode,
                                              const std::string& statusMsg) {
-    LOGGER->info(">>> Got trading engine notify >>>  {} {}", statusCode, statusMsg);
+    MY_LOGGER->info(">>> Got trading engine notify >>>  {} {}", statusCode, statusMsg);
 }
 
 void GwTraderEngine::onLogin(or_channelid_i channelId, or_investorid_i investorId, bool hasLogin) {
-    LOGGER->info("onLogin {}, {}, {}", channelId, investorId, hasLogin);
+    MY_LOGGER->info("onLogin {}, {}, {}", channelId, investorId, hasLogin);
 }
 
 void GwTraderEngine::onInitialized(or_channelid_i channelId, or_investorid_i investorId,
                                    bool isSucceed) {
-    LOGGER->info("(InitControl) channel {} investor {} initialized {}.", channelId, investorId,
+    MY_LOGGER->info("(InitControl) channel {} investor {} initialized {}.", channelId, investorId,
                  isSucceed ? "success" : "failed");
 
     init();
@@ -33,7 +39,7 @@ void GwTraderEngine::onInitialized(or_channelid_i channelId, or_investorid_i inv
 
 void GwTraderEngine::onDepthMarketData(or_channelid_i          channelId,
                                        ORDepthMarketDataField* pDepthMarketData) {
-    LOGGER->info("onDepthMarketData channelId={}, insId={}", channelId,
+    MY_LOGGER->info("onDepthMarketData channelId={}, insId={}", channelId,
                  pDepthMarketData->InstrumentID);
     auto depth = std::make_shared<ORDepthMarketDataField>();
     memcpy(depth.get(), pDepthMarketData, sizeof(ORDepthMarketDataField));
@@ -72,7 +78,7 @@ void GwTraderEngine::join() {
     while (!exiting_) {
         SleepMs(1000);
     }
-    LOGGER->info("GwTraderEngine joined.");
+    MY_LOGGER->info("GwTraderEngine joined.");
 }
 
 void GwTraderEngine::stop() { exiting_ = true; }
@@ -81,7 +87,7 @@ void GwTraderEngine::subscribe(const std::string& exId, const std::string& insId
                                or_productclass_e product_class) {
     auto channel = getChannel(11001);
     if (nullptr == channel) {
-        LOGGER->warn("Channel not ready!");
+        MY_LOGGER->warn("Channel not ready!");
         return;
     }
 
@@ -105,7 +111,7 @@ void GwTraderEngine::unsubscribe(const std::string& exId, const std::string& ins
                                  or_productclass_e product_class) {
     auto channel = getChannel(11001);
     if (nullptr == channel) {
-        LOGGER->warn("Channel not ready!");
+        MY_LOGGER->warn("Channel not ready!");
         return;
     }
 
@@ -157,17 +163,17 @@ GwTraderEnginePtr gwengine_main(int argc, char** argv) {
     }
 
     auto orfn = fmt::format("{}teor.GwTraderEngineer.log", appconfigs->log_path);
-    g_initLibOrderRouter(orfn.c_str(), spdlog::level::debug, false, DEFAULT_LOG_FORMAT);
+    g_initLibOrderRouter(orfn.c_str(), spdlog::level::debug, false, MY_DEFAULT_LOG_FORMAT);
     auto gwfn = fmt::format("{}greatwall.GwTraderEngineer.log", appconfigs->log_path);
-    greatwall_init_global_log(gwfn.c_str(), "greatwall", debug, true, DEFAULT_LOG_FORMAT);
+    greatwall_init_global_log(gwfn.c_str(), "greatwall", debug, true, MY_DEFAULT_LOG_FORMAT);
 
-    LOGGER = LoggerWrapper::getLogger("GwTraderEngine");
-    LOGGER->info("Using GreatWall config file: {}", pfn);
+    MY_LOGGER = LoggerWrapper::getLogger("GwTraderEngine");
+    MY_LOGGER->info("Using GreatWall config file: {}", pfn);
     auto dumper = std::make_shared<GwTraderEngine>(appconfigs);
     dumper->init();
 
-    LOGGER->info("Starting trader...");
+    MY_LOGGER->info("Starting trader...");
     dumper->start(RunMode::Execute, "gwengine");
-    LOGGER->info("trader started.");
+    MY_LOGGER->info("trader started.");
     return dumper;
 }

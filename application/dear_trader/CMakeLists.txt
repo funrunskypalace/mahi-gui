@@ -17,8 +17,6 @@ set(ImPluginLibraryRef              implugin_$ENV{OSVER}$<$<CONFIG:Debug>:d>)
 
 add_definitions(-DPROTOBUF_USE_DLLS)
 add_definitions(-DSPDLOG_FMT_EXTERNAL)
-add_definitions(-DSPDLOG_FMT_EXTERNAL)
-add_definitions(-DFMT_HEADER_ONLY=1)
 
 file(GLOB_RECURSE dear_trader_app_SRC
     "${MahiSrcDir}/src/pch/compat.h"
@@ -45,6 +43,7 @@ if(UNIX)
 else()
     #set_target_properties(dear_trader_app PROPERTIES VS_DEBUGGER_COMMAND_ARGUMENTS "--log-level debug")
     set_target_properties(dear_trader_app PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE" VS_DEBUGGER_WORKING_DIRECTORY ${OpenOrderDistDir}/app_home/bin)
+    set_target_properties(dear_trader_app PROPERTIES LINK_FLAGS "/STACK:16777216" )
 endif()
 add_custom_command(TARGET dear_trader_app POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:dear_trader_app> ${OpenOrderDistDir}/app_home/bin/)
 INSTALL(TARGETS dear_trader_app RUNTIME)
