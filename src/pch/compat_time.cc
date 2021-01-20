@@ -104,7 +104,7 @@ uint64_t parse_milliseconds(int32_t date, int32_t timeWithMs, bool utc) {
     auto      ms      = timeWithMs % 1000;
     struct tm t       = *(!utc ? ltm : gtm);
     t.tm_year         = date / 10000 - 1900;
-    t.tm_mon          = (date % 10000) / 100;
+    t.tm_mon          = (date % 10000) / 100 - 1;
     t.tm_mday         = (date % 100);
     t.tm_hour         = timeWithMs / 10000000;
     t.tm_min          = (timeWithMs % 10000000) / 100000;
