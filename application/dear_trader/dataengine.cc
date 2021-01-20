@@ -12,6 +12,11 @@ float DataEngine::indexFromUpdateMillisec(int tradingDay, int64_t nanoTime) {
     return (float)((mstime - msfirst) / 100) / (float)10000.0;
 }
 
+/// <summary>
+/// 完全可以变成通用的通过JSON传递插件信息来实现插件化调用的接口。
+/// 无需再使用成员变量hdf5_plugin_。
+/// </summary>
+/// <param name="json"></param>
 void DataEngine::loadMarketData(const std::string& json) {
     if (hdf5_plugin_) {
         hdf5_plugin_->close();
