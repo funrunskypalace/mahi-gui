@@ -12,7 +12,7 @@ struct LogInfoItem {
     int level;
     std::string logmsg;
 };
-using LogInfoItemPtr=std::shared_ptr<LogInfoItem>;
+using LogInfoItemPtr = std::shared_ptr<LogInfoItem>;
 
 using SafeDataPackCb = std::function<void(InstrumentPackPtr&)>;
 using SafeFetchLogCb = std::function<void(const LogInfoItemPtr&)>;
@@ -20,7 +20,7 @@ using SafeFetchLogCb = std::function<void(const LogInfoItemPtr&)>;
 class DataEngine {
 public:
     DataEngine();
-    void loadMarketData(const std::string& json);
+    void processCommand(const std::string& json);
     void iterate(SafeDataPackCb callback);
     void updateData(const std::string& exid, const std::string& insid, SafeDataPackCb callback);
     int instrumentSize() const;
@@ -29,14 +29,15 @@ public:
 
 protected:
     int parseJson();
+    void reportLog(int level, const std::string& msg);
     float indexFromUpdateMillisec(int tradingDay, int64_t nanoTime);
 
 private:
     mutable std::mutex mux_instruments_;
     std::unordered_map<std::string, InstrumentPackPtr> instruments_;
-    plugin::AnyOtherPtr hdf5_plugin_ = {nullptr};
-    int start_trading_day_           = {0};
-    int64_t first_nano_              = {0};
+    plugin::AnyOtherPtr current_plugin_ = {nullptr};
+    int start_trading_day_              = {0};
+    int64_t first_nano_                 = {0};
     mutable std::mutex mux_logs_;
     std::list<LogInfoItemPtr> logs_;
 };

@@ -128,7 +128,7 @@ void MyApp::ShowBasicWindow() {
             // ImGui::Checkbox("Fills", &show_fills);
             // ImGui::SameLine();
             if (ImGui::Button("Update")) {
-                dataeg_->loadMarketData(text);
+                dataeg_->processCommand(text);
             } else {
                 dataeg_->iterate([&](InstrumentPackPtr& pack) -> void {
                     auto it = plotlines.find(pack->insid);
@@ -149,13 +149,12 @@ void MyApp::ShowBasicWindow() {
                 if (ImPlot::BeginPlot("Stock Prices", "Ticks", "Price")) {
                     for (auto line : plotlines) {
                         ImPlot::PlotLine(line.first.c_str(), &line.second->Data[0].x,
-                            &line.second->Data[0].y, line.second->Data.size(), 0,
-                            2 * sizeof(float));
+                                         &line.second->Data[0].y, line.second->Data.size(), 0,
+                                         2 * sizeof(float));
                     }
                     ImPlot::EndPlot();
                 }
             }
-
         }
         ImGui::EndGroup();
     }
@@ -282,7 +281,7 @@ void MyApp::ShowExampleAppLog() {
     // the _same_ window. Most of the contents of the window will be added by the log.Draw() call.
     ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
     ImGui::Begin("Example: Log", p_open);
-    dataeg_->fetchLogs([&](const LogInfoItemPtr& logitem)->void{
+    dataeg_->fetchLogs([&](const LogInfoItemPtr& logitem) -> void {
         applog.AddLog("%s\n", logitem->logmsg.c_str());
     });
     ImGui::End();
